@@ -272,10 +272,9 @@ builder.selenium2.playback.execute = function(name, parameters, callback, errorC
   };
   builder.selenium2.playback.callbackCount++;
   var cb_id = builder.selenium2.playback.callbackCount;
-  var cb_step_id = builder.selenium2.playback.currentStep.id;
   builder.selenium2.playback.exeCallback = function(result) {
-    if (builder.selenium2.playback.callbackCount != cb_id || builder.selenium2.playback.currentStep.id != cb_step_id) {
-        return;
+    if (builder.selenium2.playback.callbackCount != cb_id) {
+      return;
     }
     result = JSON.parse(result);
     if (result.status != 0) {
@@ -1251,6 +1250,7 @@ builder.selenium2.playback.recordError = function(message) {
 };
 
 builder.selenium2.playback.doRecordError = function(message) {
+  message = message ? ("" + message) : _t('sel1_playback_failed');
   builder.selenium2.playback.stepStateCallback(builder.selenium2.playback, builder.selenium2.playback.script, builder.selenium2.playback.currentStep, builder.selenium2.playback.currentStepIndex(), builder.stepdisplay.state.ERROR, null, message);
   builder.selenium2.playback.playResult.success = false;
   builder.selenium2.playback.playResult.errormessage = message;
